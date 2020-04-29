@@ -4,6 +4,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     runtimePort = port;
 
     runtimePort.onMessage.addListener(function(message) {
+        console.log(message);
         if (!message || !message.messageFromContentScript1234) {
             return;
         }
@@ -64,9 +65,10 @@ chrome.runtime.onConnect.addListener(function(port) {
             getUserConfigs();
             return;
         }
-
+        
         if (message.stopRecording) {
             if(message.RecordRTC_Extension) {
+                localStorage.setItem('video_file_name', message.video_file_name);
                 stopRecordingCallback = function(file) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
@@ -83,5 +85,6 @@ chrome.runtime.onConnect.addListener(function(port) {
             stopScreenRecording();
             return;
         }
+
     });
 });

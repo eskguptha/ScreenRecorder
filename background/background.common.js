@@ -16,6 +16,7 @@ var enableSpeakers = true;
 var videoCodec = 'Default';
 var videoMaxFrameRates = '';
 var videoResolutions = '1920x1080';
+//var videoResolutions = '1600 x 900';
 
 var startedVODRecordedAt = (new Date).getTime();
 

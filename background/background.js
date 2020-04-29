@@ -206,11 +206,18 @@ function stopScreenRecording() {
         var a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        file_name="Vidmed_"+cur_date_str+videoFileExt;
-        a.download = file_name;
+        if (localStorage.getItem('video_file_name') !== null ){
+            file_name=localStorage.getItem('video_file_name').toString()+videoFileExt;
+            a.download = localStorage.getItem('video_file_name').toString()+videoFileExt;    
+        }
+        else{
+            file_name="WebScreenRecorderVideo_"+cur_date_str+videoFileExt;
+            a.download = "WebScreenRecorderVideo_"+cur_date_str+videoFileExt;
+        }
+        
         document.body.appendChild(a);
         a.click();
-          
+        localStorage.removeItem('video_file_name');
 
         DiskStorage.StoreFile(file, file_name,function(response) {
             try {

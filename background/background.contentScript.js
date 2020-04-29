@@ -1,4 +1,5 @@
 ﻿var port = chrome.runtime.connect();
+var video_file_name;
 port.onMessage.addListener(function(message) {
     message.messageFromContentScript1234 = true
     window.postMessage(message, '*');
@@ -39,7 +40,7 @@ window.addEventListener('keyup', function(e) {
     }
 }, false);
 
-function RecordRTC_Extension(config) {
+function WebScreenRecorderRTC_Extension(config) {
     config = config || {
         enableTabCaptureAPI: false,
         enableTabCaptureAPIAudioOnly: false,
@@ -154,6 +155,9 @@ function RecordRTC_Extension(config) {
 
             window.postMessage(config, '*');
         },
+        setVideoFileName: function(v_config){
+            config.video_file_name = v_config.video_file_name;
+        },
         stopRecording: function(callback) {
             stopCallback = callback || function() {};
             
@@ -167,10 +171,11 @@ function RecordRTC_Extension(config) {
 
             window.postMessage(config, '*');
         },
+
         getSupoortedFormats: getSupoortedFormats
     }
 }
 
 var script = document.createElement('script');
-(document.head || document.body || document.documentElement).appendChild(script).text = RecordRTC_Extension.toString() + ';;';
+(document.head || document.body || document.documentElement).appendChild(script).text = WebScreenRecorderRTC_Extension.toString() + ';;';
 script.remove();
